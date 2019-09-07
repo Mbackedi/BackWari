@@ -65,7 +65,7 @@ class TransactionController extends AbstractController
 
             //Verifier le montant dispo
             $comptes = $this->getUser()->getCompte();
-           // var_dump($comptes); die();
+            // var_dump($comptes); die();
             if ($transaction->getMontant() >= $comptes->getSolde()) {
                 return $this->json([
                     'message1' => 'votre solde( ' . $comptes->getSolde() . ' ) ne vous permez pas d\'effectuer cette transaction'
@@ -140,7 +140,7 @@ class TransactionController extends AbstractController
 
         $repository = $this->getDoctrine()->getRepository(Transaction::class);
         $cod = $repository->findOneBy(['code' => $codes]);
-
+        
         if (!$cod) {
             return new Response('Ce code est invalide', Response::HTTP_CREATED);
         }
@@ -156,6 +156,7 @@ class TransactionController extends AbstractController
         $cod->setCaissierBen($user);
         $cod->setTypedoperation("retiré");
         $cod->setDateretrait(new \DateTime());
+        var_dump($values['numeropieceBen']);
         $cod->setNumeropieceBen($values['numeropieceBen']);
         $cod->setTypepieceBen($values['typepieceBen']);
         $entityManager->persist($cod);

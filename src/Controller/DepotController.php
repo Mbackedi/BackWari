@@ -42,6 +42,7 @@ class DepotController extends AbstractController
         $depot->setDatedepot(new \Datetime());
         //  var_dump( $depot->setDateDepot(new \DateTime())); die;
         $depot->getMontant();
+        //var_dump($depot->getMontant());die();
 
         $form->submit($data);
         if ($form->isSubmitted()) {

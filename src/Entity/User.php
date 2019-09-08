@@ -28,20 +28,20 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"liste-user"})
+     * @Groups({"liste-user","liste-userparte"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-user"})
+     *  @Groups({"liste-user", "liste-userparte"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
-     *  @Groups({"liste-user"})
+     *  @Groups({"liste-user", "liste-userparte"})
      */
     private $roles = [];
 
@@ -55,7 +55,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-user"})
+     *  @Groups({"liste-user", "liste-userparte"})
      */
     private $nomcomplet;
 
@@ -74,6 +74,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="utilisateur")
+     *  @Groups({"liste-userparte"})
      */
     private $partenaire;
 

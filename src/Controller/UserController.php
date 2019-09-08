@@ -239,4 +239,25 @@ class UserController extends AbstractController
             'Content-Type' => 'application/json'
         ]);
     }
+
+    /**
+     * @Route("/listeruserparte/{id}", name="listeruser", methods={"GET"})
+     */
+    public function listeruserpartenaire(Request $request, SerializerInterface $serializer): Response
+    {
+        $data = $request->request->all();
+        $user = $this->getUser();
+        $partenaire = $user->getPartenaire();
+        $users = $this->getDoctrine()->getRepository('App:User')->findBy(['partenaire' => $partenaire]);
+        $data = $serializer->serialize($users, 'json', ['groups' => ['liste-userparte']]);
+        return new Response(
+            $data,
+            200,
+            [
+                'Content-Type' => 'application/json'
+            ]
+        );
+    }    
+
+
 }

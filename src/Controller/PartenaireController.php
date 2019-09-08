@@ -116,4 +116,6 @@ class PartenaireController extends AbstractController
 
         return $this->redirectToRoute('partenaire_index');
     }
+
+
 }

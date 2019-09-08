@@ -74,7 +74,7 @@ class CompteController extends AbstractController
 
     }
 
-
+          //Lister tous les comptes
 
     /**
      *@Route("/listercompte", name="listCompte", methods={"GET"})
@@ -88,6 +88,28 @@ class CompteController extends AbstractController
             'Content-Type' => 'application/json'
         ]);
     }
+           
+    //Lister compte d'un partenaire
+
+
+    /**
+     * @Route("/listercompteparte", name="listerCptparte", methods={"GET"})
+     */
+    public function listercompteparte(Request $request, SerializerInterface $serializer): Response
+    {
+        $data = $request->request->all();
+        $user = $this->getUser();
+        $partenaire = $user->getPartenaire();
+        $users = $this->getDoctrine()->getRepository('App:Compte')->findBy(['partenaire' => $partenaire]);
+        $data = $serializer->serialize($users, 'json', ['groups' => ['lister-cptparte']]);
+        return new Response(
+            $data,
+            200,
+            [
+                'Content-Type' => 'application/json'
+            ]
+        );
+    }    
 
 
 

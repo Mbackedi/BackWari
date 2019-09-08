@@ -224,21 +224,8 @@ class UserController extends AbstractController
         return new Response('Admin  ajouté  avec succès', Response::HTTP_CREATED);
     }
 
-    //Lister utilisateur
-
-
-    /**
-     * @Route("/listeruser", name="listUser", methods={"GET"})
-     */
-    public function listerutilisateur(UserRepository $UserRepository, SerializerInterface $serializer)
-    {
-        $user = $UserRepository->findAll();
-        $data = $serializer->serialize($user, 'json', ['groups' => ['liste-user']]);
-
-        return new Response($data, 200, [
-            'Content-Type' => 'application/json'
-        ]);
-    }
+    
+        //Lister les utilisateurs d'un paryenaire
 
     /**
      * @Route("/listeruserparte/{id}", name="listeruser", methods={"GET"})

@@ -63,18 +63,19 @@ class User implements UserInterface
      * @ORM\Column(type="integer",  length=20, unique=true)
      * @Assert\Positive
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-user"})
+     * @Groups({"liste-userparte", "liste-userparte"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-userparte", "liste-userparte"})
      */
     private $statut;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="utilisateur")
-     *  @Groups({"liste-userparte"})
+     *
      */
     private $partenaire;
 
@@ -110,6 +111,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"liste-user", "liste-userparte"})
      */
     private $updatedAt;
 

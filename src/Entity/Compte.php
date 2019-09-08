@@ -21,18 +21,21 @@ class Compte
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste-compte"})
+     * @Groups({"liste-compte", "lister-cptparte"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
-     * @Groups({"liste-compte"})
+     * @Groups({"liste-compte", "lister-cptparte"})
      */
     private $NumCompte;
 
     /**
      * @ORM\Column(type="bigint")
      * @Groups({"liste-compte"})
+     * @Groups({"liste-compte", "lister-cptparte"})
      */
     private $solde;
 

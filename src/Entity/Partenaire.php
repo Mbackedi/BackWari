@@ -53,6 +53,7 @@ class Partenaire
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-userparte"}) 
      */
     private $Statut;
 

@@ -72,7 +72,9 @@ class UserController extends AbstractController
             $compte = $repos->find($values['compte']);
             $user->setCompte($compte); */
 
+
             $role = [];
+            var_dump($profils->getLibelle());
             if ($profils->getLibelle() == "SUPER_ADMIN") {
                 $role = (["ROLE_ADMIN"]);
             } elseif ($profils->getLibelle() == "ADMIN") {
@@ -185,6 +187,11 @@ class UserController extends AbstractController
         $compte->setNumCompte($number);
         $compte->setPartenaire($partenaire);
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($compte);
+        $entityManager->flush();
+        $repository = $this->getDoctrine()->getRepository(Compte::class);
+        $idcompte = $repository->find($compte->getId());
+
 
         $utilisateur = new User();
         $form = $this->createForm(UserType::class, $utilisateur);
@@ -193,8 +200,9 @@ class UserController extends AbstractController
         $form->submit($data);
         $utilisateur->setImageFile($files);
 
-        $utilisateur->setRoles(["ROLE_CAISSIER"]);
+        $utilisateur->setRoles(["ROLE_ADMIN"]);
         $utilisateur->setPartenaire($partenaire);
+        $utilisateur->setCompte($idcompte);
         $utilisateur->setStatut("debloquer");
         $utilisateur->setPassword(
             $passwordEncoder->encodePassword(
@@ -211,9 +219,24 @@ class UserController extends AbstractController
             ]);
         }
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($compte);
         $entityManager->persist($utilisateur);
         $entityManager->flush();
         return new Response('Admin  ajouté  avec succès', Response::HTTP_CREATED);
+    }
+
+    //Lister utilisateur
+
+
+    /**
+     * @Route("/listeruser", name="listUser", methods={"GET"})
+     */
+    public function listerutilisateur(UserRepository $UserRepository, SerializerInterface $serializer)
+    {
+        $user = $UserRepository->findAll();
+        $data = $serializer->serialize($user, 'json', ['groups' => ['liste-user']]);
+
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 }

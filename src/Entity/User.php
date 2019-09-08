@@ -4,15 +4,17 @@ namespace App\Entity;
 
 use App\Entity\Profil;
 use App\Entity\Partenaire;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 
 
@@ -26,17 +28,20 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste-user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
+     *  @Groups({"liste-user"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     *  @Groups({"liste-user"})
      */
     private $roles = [];
 
@@ -50,6 +55,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
+     *  @Groups({"liste-user"})
      */
     private $nomcomplet;
 
@@ -57,6 +63,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer",  length=20, unique=true)
      * @Assert\Positive
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
+     *  @Groups({"liste-user"})
      */
     private $telephone;
 

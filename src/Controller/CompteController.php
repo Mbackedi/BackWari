@@ -7,6 +7,7 @@ use App\Entity\Compte;
 use App\Entity\Partenaire;
 use App\Form\CompteUserType;
 use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,7 +110,39 @@ class CompteController extends AbstractController
                 'Content-Type' => 'application/json'
             ]
         );
-    }    
+    }
+    
+    
+      //Alouer compte à un user par partenaire
+    
+    /**
+     * @Route("/addCompte", name="ajou_compte", methods={"POST","PUT"})
+     *@IsGranted({"ROLE_ADMIN"})
+     */
+    public function addcompteuser (Request $request,  CompteRepository $compte, UserRepository $users, EntityManagerInterface $entityManager)
+    {
+       
+        $values =$request->request->all();
+      
+        $ut=$users->findOneBy(['username'=>$values['username']]);
+        $c=$compte->findById($values['compte']);
+
+   
+        if(!$ut ){
+          return new Response("Ce username n'existe pas ",Response::HTTP_CREATED);
+        }
+     
+          $ut->setCompte($c[0]);
+     
+            $entityManager->flush();
+            $data = [
+                'status14' => 200,
+                'message14' => 'Le compte a bien été  bien ajoute'
+            ];
+            return new JsonResponse($data);
+        
+    }
+
 
 
 

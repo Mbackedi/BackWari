@@ -26,34 +26,34 @@ class Partenaire
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-userparte"})
+     *  @Groups({"liste-userparte","comptes"})
      */
     private $nomEntreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")
-     *  @Groups({"liste-userparte"}) 
+     *  @Groups({"liste-userparte", "comptes"}) 
      */
     private $RS;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-userparte"})
+     *  @Groups({"liste-userparte", "comptes"})
      */
     private $NINEA;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")
-     *  @Groups({"liste-userparte"}) 
+     *  @Groups({"liste-userparte", "comptes"}) 
      */
     private $Adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste-userparte"}) 
+     * @Groups({"liste-userparte", "comptes"}) 
      */
     private $Statut;
 
@@ -64,6 +64,7 @@ class Partenaire
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire")
+     *@Groups({"comptes"})
      */
     private $comptes;
 

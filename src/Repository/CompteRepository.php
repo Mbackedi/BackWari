@@ -35,6 +35,16 @@ class CompteRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByNumCompte($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.NumCompte = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Compte

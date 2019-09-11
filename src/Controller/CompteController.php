@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -47,7 +48,7 @@ class CompteController extends AbstractController
             $sn = "SN";
             $number = $sn . $num;
             $compte->setNumCompte($number);
-           /*  $compte->setSolde(0);
+            /*  $compte->setSolde(0);
             $compte->setNumCompte("5631616311"); */
             // Apres recuperation de lobjet on le met dans le setter
             $compte->setPartenaire($rien);
@@ -75,7 +76,7 @@ class CompteController extends AbstractController
 
     }
 
-          //Lister tous les comptes
+    //Lister tous les comptes
 
     /**
      *@Route("/listercompte", name="listCompte", methods={"GET"})
@@ -89,7 +90,7 @@ class CompteController extends AbstractController
             'Content-Type' => 'application/json'
         ]);
     }
-           
+
     //Lister compte d'un partenaire
 
 
@@ -111,36 +112,57 @@ class CompteController extends AbstractController
             ]
         );
     }
-    
-    
-      //Alouer compte à un user par partenaire
-    
+
+
+    //Alouer compte à un user par partenaire
+
     /**
      * @Route("/addCompte", name="ajou_compte", methods={"POST","PUT"})
      *@IsGranted({"ROLE_ADMIN"})
      */
-    public function addcompteuser (Request $request,  CompteRepository $compte, UserRepository $users, EntityManagerInterface $entityManager)
+    public function addcompteuser(Request $request,  CompteRepository $compte, UserRepository $users, EntityManagerInterface $entityManager)
     {
-       
-        $values =$request->request->all();
-      
-        $ut=$users->findOneBy(['username'=>$values['username']]);
-        $c=$compte->findById($values['compte']);
 
-   
-        if(!$ut ){
-          return new Response("Ce username n'existe pas ",Response::HTTP_CREATED);
+        $values = $request->request->all();
+
+        $ut = $users->findOneBy(['username' => $values['username']]);
+        $c = $compte->findById($values['compte']);
+
+
+        if (!$ut) {
+            return new Response("Ce username n'existe pas ", Response::HTTP_CREATED);
         }
-     
-          $ut->setCompte($c[0]);
-     
-            $entityManager->flush();
-            $data = [
-                'status14' => 200,
-                'message14' => 'Le compte a bien été  bien ajoute'
-            ];
-            return new JsonResponse($data);
-        
+
+
+        $ut->setCompte($c[0]);
+
+        $entityManager->flush();
+        $data = [
+            'status14' => 200,
+            'message14' => 'Le compte a bien été  bien ajoute'
+        ];
+        return new JsonResponse($data);
+    }
+
+    //Rechercher Compte
+
+    /**
+     *@Route("/cherchercompte",name="cherchercompte", methods ={"GET","POST"})
+     */
+
+    public function findcompte(Request $request,  SerializerInterface $serializer)
+    {
+        $values = json_decode($request->getContent());
+        $compte = new Compte();
+        $compte->setNumCompte($values->NumCompte);
+
+        $repository = $this->getDoctrine()->getRepository(Compte::class);
+        $compte = $repository->findByNumCompte($values->NumCompte);
+
+        $data = $serializer->serialize($compte, 'json', ['groups' => ['comptes']]);
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
 

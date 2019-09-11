@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Envoyeur;
 use App\Entity\Beneficiaire;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -17,6 +18,7 @@ class Transaction
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste-code"})
      */
     private $id;
 
@@ -24,11 +26,13 @@ class Transaction
 
     /**
      * @ORM\Column(type="string")
+     * @Groups({"liste-code"})
      */
     private $code;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"liste-code"})
      */
     private $montant;
 
@@ -69,12 +73,14 @@ class Transaction
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-code"})
      */
     private $typedoperation;
 
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"liste-code"})
      */
     private $numerotransacion;
 
@@ -83,46 +89,55 @@ class Transaction
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="transactions")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"liste-code"})
      */
     private $caissier;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-code"})
      */
     private $nomExp;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-code"})
      */
     private $prenomExp;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"liste-code"})
      */
     private $telephonExp;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=255)
+     * @Groups({"liste-code"})
      */
     private $adresseExp;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"liste-code"})
      */
     private $numeropieceEXp;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=255)
+     * @Groups({"liste-code"})
      */
     private $typepieceExp;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-code"})
      */
     private $nomBen;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste-code"})
      */
     private $prenomBen;
 

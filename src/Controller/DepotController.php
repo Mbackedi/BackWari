@@ -34,21 +34,19 @@ class DepotController extends AbstractController
      * @Route("/depot", name="depot_new", methods={"GET","POST"})
      */
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function depot(Request $request, EntityManagerInterface $entityManager): Response
     {
         $depot = new Depot();
         $form = $this->createForm(DepotType::class, $depot);
         $data = $request->request->all();
         $depot->setDatedepot(new \Datetime());
-        //  var_dump( $depot->setDateDepot(new \DateTime())); die;
         $depot->getMontant();
-        //var_dump($depot->getMontant());die();
 
         $form->submit($data);
         if ($form->isSubmitted()) {
             $depot->getMontant();
 
-           if ($depot->getMontant() >= 75000) {
+            if ($depot->getMontant() >= 75000) {
                 $compte = $depot->getCompte();
                 $compte->setSolde($compte->getSolde() + $depot->getMontant());
                 $entityManager = $this->getDoctrine()->getManager();

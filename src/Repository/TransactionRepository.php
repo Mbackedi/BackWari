@@ -36,6 +36,17 @@ class TransactionRepository extends ServiceEntityRepository
     }
     */
 
+    public function findBycode($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.findBycode = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Transaction
     {

@@ -6,6 +6,7 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,24 +19,29 @@ class Depot
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"comptes"}) 
+
      */
     private $id;
 
     /**
      * @ORM\Column(type="bigint")
      * @Assert\Positive
-     * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")   
+     * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")
+     * @Groups({"comptes"}) 
      */
 
     private $montant;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"comptes"})
      */
     private $datedepot;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="depot")
+     * @Groups({"comptes"})
      */
     private $compte;
 

@@ -99,7 +99,7 @@ class TransactionController extends AbstractController
             $transaction->setCommissionetat($etat);
             //$transaction->setCommissionRetrait($retrait);
 
-            $total = $montant + $valeur;
+            $total = $montant + $values->getValeur();
             $transaction->setTotal($total);
             $transaction->setTypedoperation('envoyer');
 
@@ -140,7 +140,7 @@ class TransactionController extends AbstractController
 
         $repository = $this->getDoctrine()->getRepository(Transaction::class);
         $cod = $repository->findOneBy(['code' => $codes]);
-        
+
         if (!$cod) {
             return new Response('Ce code est invalide', Response::HTTP_CREATED);
         }
@@ -162,6 +162,27 @@ class TransactionController extends AbstractController
         $entityManager->persist($cod);
         $entityManager->flush();
         return new Response('Retrait effectué', Response::HTTP_CREATED);
+    }
+
+
+    //Rechercher code
+
+    /**
+     *@Route("/cherchecode",name="recherchecode", methods ={"GET","POST"})
+     */
+
+    public function recherchecode(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator, SerializerInterface $serializer)
+    {
+        $values = json_decode($request->getContent());
+        $transaction = new Transaction();
+        $transaction->setCode($values->code);
+
+        $repository = $this->getDoctrine()->getRepository(Transaction::class);
+        $transaction = $repository->findBycode($values->code);
+        $data = $serializer->serialize($transaction, 'json');
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
     }
 
 

@@ -22,31 +22,33 @@ class Compte
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups({"liste-compte"})
-     * @Groups({"liste-compte", "lister-cptparte"})
+     * @Groups({"liste-compte", "lister-cptparte","comptes"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
-     * @Groups({"liste-compte", "lister-cptparte"})
+     * @Groups({"liste-compte", "lister-cptparte","comptes"})
      */
     private $NumCompte;
 
     /**
      * @ORM\Column(type="bigint")
      * @Groups({"liste-compte"})
-     * @Groups({"liste-compte", "lister-cptparte"})
+     * @Groups({"liste-compte", "lister-cptparte","comptes"})
      */
     private $solde;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Partenaire", inversedBy="comptes")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"comptes"})
      */
     private $partenaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Depot", mappedBy="compte")
+     * @Groups({"comptes"})
      */
     private $depot;
 

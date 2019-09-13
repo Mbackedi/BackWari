@@ -28,20 +28,20 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"liste-user","liste-userparte"})
+     * @Groups({"lister-user","liste-userparte"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-user", "liste-userparte"})
+     *  @Groups({"lister-user", "liste-userparte"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
-     *  @Groups({"liste-user", "liste-userparte"})
+     *  @Groups({"lister-user", "liste-userparte"})
      */
     private $roles = [];
 
@@ -55,7 +55,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-user", "liste-userparte"})
+     *  @Groups({"lister-user", "liste-userparte"})
      */
     private $nomcomplet;
 
@@ -69,7 +69,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste-userparte", "liste-userparte"})
+     * @Groups({"liste-userparte", "liste-userparte","lister-user"})
      */
     private $statut;
 
@@ -111,7 +111,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"liste-user", "liste-userparte"})
+     * @Groups({"lister-user", "liste-userparte"})
      */
     private $updatedAt;
 
@@ -167,7 +167,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        //$roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

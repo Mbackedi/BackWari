@@ -43,7 +43,7 @@ class UserController extends AbstractController
      * @Route("/user", name="user_new", methods={"GET","POST"})
      */
 
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    public function Ajoutuser(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
     {
 
         $user = new User();
@@ -163,7 +163,7 @@ class UserController extends AbstractController
      * @Route("/admin", name="admin_utilisateur_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator, SerializerInterface $serializer): Response
+    public function ajoutUtilisateur(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator, SerializerInterface $serializer): Response
     {
         $partenaire = new Partenaire();
         $form = $this->createForm(PartenaireType::class, $partenaire);
@@ -245,4 +245,23 @@ class UserController extends AbstractController
             ]
         );
     }
+
+
+
+    //Lister tous les users
+
+
+    /**
+     * @Route("/listerusers/{id}", name="list_users", methods={"GET"})
+     */
+    public function listerusers(UserRepository $userRepository, SerializerInterface $serializer)
+    {
+        $user = $userRepository->findAll();
+        $data = $serializer->serialize($user, 'json', ['groups' => ['lister-user']]);
+
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+
 }

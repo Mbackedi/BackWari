@@ -236,6 +236,10 @@ class CompteController extends AbstractController
         return $this->redirectToRoute('compte_index');
     }
 
+     
+
+       //Lister tous les partenaires
+     
 
     /**
      * @Route("/listerpartenaire/{id}", name="list_parte", methods={"GET"})

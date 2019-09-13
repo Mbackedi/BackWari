@@ -108,7 +108,7 @@ class SecurityController extends AbstractController
 
         if (!$user) {
             return $this->json([
-                'message' => 'Username incorrect'
+                'message' => 'Ce nom dutilisateur nexiste pas '
             ]);
         }
 
@@ -116,7 +116,7 @@ class SecurityController extends AbstractController
             ->isPasswordValid($user, $password);
         if (!$isValid) {
             return $this->json([
-                'message' => 'Mot de passe incorect'
+                'message' => 'Ce mot de pass est incorrect'
             ]);
         }
         if ($user->getStatut() == "bloquer") {

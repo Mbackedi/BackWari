@@ -43,18 +43,7 @@ class PartenaireController extends AbstractController
     }
 
 
-    /**
-     * @Route("/listerpartenaire/{id}", name="list_phone", methods={"GET"})
-     */
-    public function listerpartenaire(PartenaireRepository $partenaireRepository, SerializerInterface $serializer)
-    {
-        $partenaire = $partenaireRepository->findAll();
-        $data = $serializer->serialize($partenaire, 'json');
-
-        return new Response($data, 200, [
-            'Content-Type' => 'application/json'
-        ]);
-    }
+   
 
 
 
@@ -116,6 +105,4 @@ class PartenaireController extends AbstractController
 
         return $this->redirectToRoute('partenaire_index');
     }
-
-
 }

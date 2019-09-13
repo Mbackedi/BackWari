@@ -76,9 +76,9 @@ class UserController extends AbstractController
             $role = [];
             var_dump($profils->getLibelle());
             if ($profils->getLibelle() == "SUPER_ADMIN") {
-                $role = (["ROLE_ADMIN"]);
+                $role = (["ROLE_SUPER_ADMIN"]);
             } elseif ($profils->getLibelle() == "ADMIN") {
-                $role = (["ROLE_USER"]);
+                $role = (["ROLE_ADMIN"]);
             } elseif ($profils->getLibelle() == "USER") {
                 $role = (["ROLE_USER"]);
             } elseif ($profils->getLibelle() == "CAISSIER") {
@@ -224,8 +224,8 @@ class UserController extends AbstractController
         return new Response('Admin  ajouté  avec succès', Response::HTTP_CREATED);
     }
 
-    
-        //Lister les utilisateurs d'un paryenaire
+
+    //Lister les utilisateurs d'un paryenaire
 
     /**
      * @Route("/listeruserparte/{id}", name="listeruser", methods={"GET"})
@@ -244,7 +244,5 @@ class UserController extends AbstractController
                 'Content-Type' => 'application/json'
             ]
         );
-    }    
-
-
+    }
 }

@@ -9,6 +9,7 @@ use App\Form\CompteUserType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use App\Repository\CompteRepository;
+use App\Repository\PartenaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,7 +85,7 @@ class CompteController extends AbstractController
     public function listercompte(CompteRepository $compteRepository, SerializerInterface $serializer)
     {
         $compte = $compteRepository->findAll();
-        $data = $serializer->serialize($compte, 'json', ['groups' => ['liste-compte']]);
+        $data = $serializer->serialize($compte, 'json', ['groups' => ['liste-compte']]);    
 
         return new Response($data, 200, [
             'Content-Type' => 'application/json'
@@ -234,4 +235,19 @@ class CompteController extends AbstractController
 
         return $this->redirectToRoute('compte_index');
     }
+
+
+    /**
+     * @Route("/listerpartenaire/{id}", name="list_parte", methods={"GET"})
+     */
+    public function listerpartenaire(PartenaireRepository $partenaireRepository, SerializerInterface $serializer)
+    {
+        $partenaire = $partenaireRepository->findAll();
+        $data = $serializer->serialize($partenaire, 'json', ['groups' => ['lister-partenaire']]);
+
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+
 }

@@ -19,41 +19,47 @@ class Partenaire
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"liste-userparte"})
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte", "lister-partenaire"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-userparte","comptes"})
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte","comptes", "lister-partenaire"})
      */
     private $nomEntreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")
-     *  @Groups({"liste-userparte", "comptes"}) 
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte", "comptes", "lister-partenaire"}) 
      */
     private $RS;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     *  @Groups({"liste-userparte", "comptes"})
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte", "comptes", "lister-partenaire"})
      */
     private $NINEA;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide")
-     *  @Groups({"liste-userparte", "comptes"}) 
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte", "comptes", "lister-partenaire"}) 
      */
     private $Adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste-userparte", "comptes"}) 
+     * @Groups({"lister-partenaire"})
+     * @Groups({"liste-userparte", "comptes", "lister-partenaire"}) 
      */
     private $Statut;
 
@@ -65,6 +71,7 @@ class Partenaire
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Compte", mappedBy="partenaire")
      *@Groups({"comptes"})
+     *@Groups({"lister-partenaire"})
      */
     private $comptes;
 

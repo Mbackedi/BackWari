@@ -156,7 +156,6 @@ class TransactionController extends AbstractController
         $cod->setCaissierBen($user);
         $cod->setTypedoperation("retiré");
         $cod->setDateretrait(new \DateTime());
-        var_dump($values['numeropieceBen']);
         $cod->setNumeropieceBen($values['numeropieceBen']);
         $cod->setTypepieceBen($values['typepieceBen']);
         $entityManager->persist($cod);

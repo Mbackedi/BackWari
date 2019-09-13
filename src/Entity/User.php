@@ -63,7 +63,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer",  length=20, unique=true)
      * @Assert\Positive
      * @Assert\NotBlank(message="Ce champ ne doit pas etre vide") 
-     * @Groups({"liste-userparte", "liste-userparte"})
+     * @Groups({"liste-userparte", "liste-userparte","lister-user"})
      */
     private $telephone;
 

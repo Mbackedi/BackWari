@@ -112,8 +112,7 @@ class SecurityController extends AbstractController
             ]);
         }
 
-        $isValid = $this->passwordEncoder
-            ->isPasswordValid($user, $password);
+        $isValid = $this->passwordEncoder->isPasswordValid($user, $password);
         if (!$isValid) {
             return $this->json([
                 'message' => 'Ce mot de pass est incorrect'

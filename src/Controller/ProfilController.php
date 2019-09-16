@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Profil;
+use App\Repository\ProfilRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -41,4 +43,20 @@ class ProfilController extends AbstractController
         ];
         return new JsonResponse($data, 500);
     }
+
+
+    /**
+     * @Route("/listerprofil/{id}", name="list_profil", methods={"GET"})
+     */
+    public function listerprofil(ProfilRepository $profilRepository, SerializerInterface $serializer)
+    {
+        $profil = $profilRepository->findAll();
+        $data = $serializer->serialize($profil, 'json', ['groups' => ['liste-profil']]);
+
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+   
+
 }

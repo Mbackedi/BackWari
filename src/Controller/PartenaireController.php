@@ -43,23 +43,6 @@ class PartenaireController extends AbstractController
     }
 
 
-   
-
-
-
-    /**
-     * @Route("/listerprofil/{id}", name="list_profil", methods={"GET"})
-     */
-    public function listerprofil(ProfilRepository $profilRepository, SerializerInterface $serializer)
-    {
-        $profil = $profilRepository->findAll();
-        $data = $serializer->serialize($profil, 'json');
-
-        return new Response($data, 200, [
-            'Content-Type' => 'application/json'
-        ]);
-    }
-
 
 
     /**

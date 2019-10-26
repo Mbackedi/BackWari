@@ -131,6 +131,8 @@ class User implements UserInterface
      */
     private $transactionsBen;
 
+   
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -392,4 +394,6 @@ class User implements UserInterface
 
         return $this;
     }
+
+   
 }

@@ -58,4 +58,23 @@ class TransactionRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    public function periode($user, $debut, $fin)
+    {
+        $from = new \DateTime($debut->format("d-m-Y") . " 00:00:00");
+        $to   = new \DateTime($fin->format("d-m-Y") . " 23:59:59");
+
+        $qb = $this->createQueryBuilder("t");
+
+        $qb->andWhere('t.datedenvoie BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->andWhere('t.caissier = :val OR t.caissierBen = :val OR (t.caissier = :val AND t.caissierBen = :val)')
+            ->setParameter('val', $user);
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
 }

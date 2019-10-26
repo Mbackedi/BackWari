@@ -5,6 +5,7 @@ namespace App\Controller;
 use Dompdf\Dompdf;
 use App\Entity\Tarif;
 use App\Entity\Transaction;
+use App\Form\RetraiType;
 use App\Form\TransactionType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TransactionRepository;
@@ -132,7 +133,7 @@ class TransactionController extends AbstractController
     {
 
         $transaction = new Transaction();
-        $form = $this->createForm(TransactionType::class, $transaction);
+        $form = $this->createForm(RetraiType::class, $transaction);
         $form->handleRequest($request);
         $values = $request->request->all();
         $form->submit($values);
@@ -265,4 +266,80 @@ class TransactionController extends AbstractController
 
         return $this->redirectToRoute('transaction_index');
     }
+
+    //AFFICHER LES FRAIS  
+
+    /**
+     *@Route("/frais/{id}",name="frais", methods ={"GET","POST"})
+     */
+
+    public function frais(Request $request, SerializerInterface $serializer)
+    {
+
+        // AJOUT OPERATION
+        $transaction = new Transaction();
+        $form = $this->createForm(TransactionType::class, $transaction);
+        $form->handleRequest($request);
+        $values = $request->request->all();
+        $form->submit($values);
+        $val = 0;
+        // recuperer la valeur du frais
+        $repository = $this->getDoctrine()->getRepository(Tarif::class);
+        $commission = $repository->findAll();
+        //recuperer la valeur du montant saisie
+        $montant = $transaction->getMontant();
+        foreach ($commission as $value) {
+            $value->getBorneInf();
+            $value->getBorneSup();
+            $val = $value->getValeur();
+            if (
+                $montant >= $value->getBorneInf() &&
+                $montant <= $value->getBorneSup()
+            ) {
+                $val = $value->getValeur();
+                break;
+            }
+        }
+        $data = $serializer->serialize($val, 'json', ['groups' => ['frais']]);
+        return new Response($data, 200, []);
+    }
+
+    //RECHERCHE PAR PERIODE
+
+
+    /**
+     *@Route("/periode/{id}",name="periode", methods ={"GET","POST"})
+     */
+
+    public function transperiode(TransactionRepository $trans, SerializerInterface $serializer, Request $request)
+    {
+        $user = $this->getUser()->getId();
+        $data = json_decode($request->getContent(), true);
+        if (!$data) {
+            $data = $request->request->all();
+        }
+
+        $debut = new \DateTime($data['debut']);
+        $fin = new \DateTime($data['fin']);
+
+        if ($fin < $debut) {
+            throw new HttpException(405, 'La date de debut doit être inférieure a la date de fin');
+        } else {
+            $req = $trans->periode($user, $debut, $fin);
+        }
+
+        if ($req == null) {
+            throw new HttpException(404, 'Il n\'y a pas de transaction sur cette période');
+        }
+
+        $data      = $serializer->serialize($req, 'json', [
+            'groups' => ['transp']
+        ]);
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+        // var_dump($req);die();
+
+    }
+
 }

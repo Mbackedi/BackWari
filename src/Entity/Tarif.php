@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ApiResource()
@@ -30,6 +32,7 @@ class Tarif
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"frais"}) 
      */
     private $valeur;
 

@@ -27,53 +27,63 @@ class Transaction
     /**
      * @ORM\Column(type="string")
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $code;
 
     /**
      * @ORM\Column(type="bigint")
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $montant;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"transp"})
      */
     private $frais;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"transp"})
      */
     private $total;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"transp"})
      */
     private $commissionsup;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"transp"})
      */
     private $commissionparte;
 
     /**
      * @ORM\Column(type="bigint")
+     * @Groups({"transp"})
      */
     private $commissionetat;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"transp"})
      */
     private $datedenvoie;
 
     /**
      * @ORM\Column(type="datetime" ,nullable=true)
+     * @Groups({"transp"})
      */
     private $dateretrait;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $typedoperation;
 
@@ -81,6 +91,7 @@ class Transaction
     /**
      * @ORM\Column(type="bigint")
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $numerotransacion;
 
@@ -90,24 +101,28 @@ class Transaction
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="transactions")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $caissier;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $nomExp;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $prenomExp;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $telephonExp;
 
@@ -120,29 +135,34 @@ class Transaction
     /**
      * @ORM\Column(type="bigint")
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $numeropieceEXp;
 
     /**
      * @ORM\Column(type="string", nullable=true, length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $typepieceExp;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $nomBen;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"liste-code"})
+     * @Groups({"transp"})
      */
     private $prenomBen;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"transp"})
      */
     private $telephonBen;
 
@@ -153,16 +173,19 @@ class Transaction
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"transp"})
      */
     private $numeropieceBen;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"transp"})
      */
     private $typepieceBen;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="transactionsBen")
+     * @Groups({"transp"})
      */
     private $caissierBen;
 

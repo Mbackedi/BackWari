@@ -4,20 +4,21 @@ namespace App\Controller;
 
 use Dompdf\Dompdf;
 use App\Entity\Tarif;
-use App\Entity\Transaction;
 use App\Form\RetraiType;
+use App\Entity\Transaction;
 use App\Form\TransactionType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Kernel;
 use App\Repository\TransactionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use SymfonyBundles\BundleDependency\Tests\Kurnel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Kernel;
-use SymfonyBundles\BundleDependency\Tests\Kurnel;
 
 /**
  * @Route("/api")
@@ -25,7 +26,13 @@ use SymfonyBundles\BundleDependency\Tests\Kurnel;
 class TransactionController extends AbstractController
 {
 
-
+    public $debut;
+    private $fin;
+    public function __construct()
+    {
+        $this->debut = 'debut';
+        $this->fin = 'fin';
+    }
 
     /**
      * @Route("/envoie", name="envoie", methods={"POST"}) 
@@ -129,7 +136,7 @@ class TransactionController extends AbstractController
      * 
      */
 
-    public function retrait(Request $request, EntityManagerInterface $entityManager)
+    public function retrait(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager)
     {
 
         $transaction = new Transaction();
@@ -161,7 +168,10 @@ class TransactionController extends AbstractController
         $cod->setTypepieceBen($values['typepieceBen']);
         $entityManager->persist($cod);
         $entityManager->flush();
-        return new Response('Retrait effectué', Response::HTTP_CREATED);
+        $data=$serializer->serialize($cod,'json');
+        return new Response($data, 200, [
+            'Content-Type'=>'application/json'
+        ]);
     }
 
 
@@ -319,8 +329,8 @@ class TransactionController extends AbstractController
             $data = $request->request->all();
         }
 
-        $debut = new \DateTime($data['debut']);
-        $fin = new \DateTime($data['fin']);
+        $debut = new \DateTime($data[$this->debut]);
+        $fin = new \DateTime($data[$this->fin]);
 
         if ($fin < $debut) {
             throw new HttpException(405, 'La date de debut doit être inférieure a la date de fin');
@@ -341,5 +351,4 @@ class TransactionController extends AbstractController
         // var_dump($req);die();
 
     }
-
 }

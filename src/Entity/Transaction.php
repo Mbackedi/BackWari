@@ -318,20 +318,7 @@ class Transaction
         return $this;
     }
 
-    public function getEnvoyeur(): ?Envoyeur
-    {
-        return $this->envoyeur;
-    }
-
-    public function setEnvoyeur(?Envoyeur $envoyeur): self
-    {
-        $this->envoyeur = $envoyeur;
-
-        return $this;
-    }
-
-
-
+ 
     public function getNumerotransacion(): ?int
     {
         return $this->numerotransacion;
@@ -344,17 +331,6 @@ class Transaction
         return $this;
     }
 
-    public function getBeneficiaire(): ?Beneficiaire
-    {
-        return $this->beneficiaire;
-    }
-
-    public function setBeneficiaire(?Beneficiaire $beneficiaire): self
-    {
-        $this->beneficiaire = $beneficiaire;
-
-        return $this;
-    }
 
     public function getCaissier(): ?User
     {
